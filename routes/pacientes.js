@@ -49,4 +49,37 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Desencriptar función
+function decrypt(value) {
+  const bytes = CryptoJS.AES.decrypt(value, process.env.SECRET_KEY);
+  return bytes.toString(CryptoJS.enc.Utf8);
+}
+
+// Ruta para obtener todos los pacientes desencriptando campos
+router.get('/', async (req, res) => {
+  try {
+    const pacientes = await Paciente.find();
+
+    const pacientesDesencriptados = pacientes.map(p => ({
+      nombre: p.nombre,
+      fechaNacimiento: p.fechaNacimiento,
+      curp: decrypt(p.curp),
+      direccion: decrypt(p.direccion),
+      telefono: decrypt(p.telefono),
+      contactoEmergencia: decrypt(p.contactoEmergencia),
+      alergias: decrypt(p.alergias),
+      enfermedades: decrypt(p.enfermedades),
+      medicamentos: decrypt(p.medicamentos),
+      ultimaConsulta: p.ultimaConsulta,
+      motivoConsulta: decrypt(p.motivoConsulta),
+      _id: p._id
+    }));
+
+    res.json(pacientesDesencriptados);
+  } catch (error) {
+    console.error('Error al obtener pacientes:', error);
+    res.status(500).json({ mensaje: 'Error al obtener pacientes' });
+  }
+});
+
 module.exports = router;
