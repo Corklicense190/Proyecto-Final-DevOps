@@ -14,6 +14,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// Servir archivos estáticos del frontend
+app.use(express.static('public'));
+
 // Importar ruta de pacientes
 const pacientesRouter = require('./routes/pacientes');
 app.use('/pacientes', pacientesRouter);
