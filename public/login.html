@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Recepcionista</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #e0f2f1;
+    }
+    .login-container {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #aaa;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+    }
+    button {
+      width: 100%;
+      padding: 0.5rem;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login Recepcionista</h2>
+    <form id="loginForm">
+      <input type="password" name="password" placeholder="Contraseña secreta" required>
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+
+  <script>
+    let claveDelServidor = "";
+
+    // Cargar la clave del servidor desde backend
+    fetch('/clave')
+      .then(res => res.json())
+      .then(data => claveDelServidor = data.clave)
+      .catch(err => console.error('Error al obtener clave:', err));
+
+    // Validación del login
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const passwordIngresada = e.target.password.value;
+
+      if (passwordIngresada === claveDelServidor) {
+        window.location.href = 'index.html';
+      } else {
+        alert('Contraseña incorrecta');
+      }
+    });
+  </script>
+</body>
+</html>

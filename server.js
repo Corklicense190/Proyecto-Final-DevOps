@@ -17,6 +17,11 @@ app.use(bodyParser.json());
 // Servir archivos estáticos del frontend
 app.use(express.static('public'));
 
+// Ruta para obtener la clave secreta (solo para desarrollo)
+app.get('/clave', (req, res) => {
+  res.json({ clave: process.env.SECRET_KEY });
+});
+
 // Importar ruta de pacientes
 const pacientesRouter = require('./routes/pacientes');
 app.use('/pacientes', pacientesRouter);
