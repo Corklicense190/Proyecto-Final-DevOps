@@ -17,6 +17,11 @@ app.use(bodyParser.json());
 // Servir archivos estáticos del frontend
 app.use(express.static('public'));
 
+// Ruta raíz - redirigir al login
+app.get('/', (req, res) => {
+  res.redirect('/login.html');
+});
+
 // Ruta para obtener la clave secreta (solo para desarrollo)
 app.get('/clave', (req, res) => {
   res.json({ clave: process.env.SECRET_KEY });

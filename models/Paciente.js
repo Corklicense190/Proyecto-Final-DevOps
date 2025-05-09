@@ -14,33 +14,26 @@ const pacienteSchema = new mongoose.Schema({
   curp: {
     type: String,
     required: true
-    // ⚠️ Este campo lo puedes encriptar antes de guardar
   },
   direccion: {
     type: String,
     required: true
-    // Encriptable
   },
   telefono: {
     type: String,
     required: true
-    // Encriptable
   },
   contactoEmergencia: {
     type: String
-    // Encriptable
   },
   alergias: {
     type: String
-    // Encriptable
   },
   enfermedades: {
     type: String
-    // Encriptable
   },
   medicamentos: {
     type: String
-    // Encriptable
   },
   ultimaConsulta: {
     type: Date,
@@ -48,7 +41,6 @@ const pacienteSchema = new mongoose.Schema({
   },
   motivoConsulta: {
     type: String
-    // Encriptable
   }
 });
 
