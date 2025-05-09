@@ -2,48 +2,274 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Login Recepcionista</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cork Medical Center - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Roboto', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background-color: #e0f2f1;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #00b09b, #96c93d);
     }
+
     .login-container {
       background-color: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 15px #aaa;
-    }
-    input {
+      padding: 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       width: 100%;
-      padding: 0.5rem;
-      margin: 0.5rem 0;
+      max-width: 400px;
+      margin: 20px;
+      position: relative;
     }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .logo i {
+      font-size: 3rem;
+      color: #00b09b;
+      margin-bottom: 0.5rem;
+      animation: pulse 2s infinite;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h2 {
+      color: #333;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hospital-name {
+      color: #00b09b;
+      font-weight: 500;
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .input-group + .input-group {
+      margin-top: 1rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e1e1e1;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .input-group input:focus {
+      border-color: #00b09b;
+    }
+
+    .input-group label {
+      position: absolute;
+      left: 15px;
+      top: -10px;
+      background: white;
+      padding: 0 5px;
+      color: #666;
+      font-size: 0.8rem;
+    }
+
+    .password-strength {
+      height: 3px;
+      background: #e1e1e1;
+      margin-top: 5px;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .strength-text {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 5px;
+      text-align: right;
+    }
+
     button {
       width: 100%;
-      padding: 0.5rem;
-      background-color: #00796b;
+      padding: 12px;
+      background: linear-gradient(to right, #00b09b, #96c93d);
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .error-message {
+      color: #ff3e3e;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      text-align: center;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .confidential-notice {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+
+    .loading {
+      display: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      top: 0;
+      left: 0;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #00b09b;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Responsive design */
+    @media (max-width: 480px) {
+      .login-container {
+        margin: 10px;
+        padding: 1.5rem;
+      }
+
+      .header h2 {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="login-container">
-    <h2>Login Recepcionista</h2>
+    <div class="logo">
+      <i class="fas fa-hospital-user"></i>
+    </div>
+    <div class="header">
+      <h2>Sistema de Acceso</h2>
+      <div class="hospital-name">Hospital Cork Medical Center</div>
+      <p>Excelencia en el cuidado de la salud</p>
+    </div>
     <form id="loginForm">
-      <input type="password" name="password" placeholder="Contraseña secreta" required>
-      <button type="submit">Entrar</button>
+      <div class="input-group">
+        <label for="username">Usuario</label>
+        <input 
+          type="text" 
+          id="username" 
+          name="username" 
+          required
+          autocomplete="username"
+          placeholder="Ingrese su usuario"
+        >
+      </div>
+      <div class="input-group">
+        <label for="password">Contraseña secreta</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          required
+          autocomplete="current-password"
+          placeholder="Ingrese su contraseña"
+        >
+        <div class="password-strength"></div>
+        <div class="strength-text"></div>
+      </div>
+      <button type="submit">
+        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+      </button>
+      <div class="error-message" id="errorMessage">
+        <i class="fas fa-exclamation-circle"></i> Usuario o contraseña incorrectos
+      </div>
     </form>
+    <div class="confidential-notice">
+      <i class="fas fa-shield-alt"></i> Sistema seguro y confidencial
+      <br>
+      <small>Cork Medical Center - Acceso restringido</small>
+    </div>
+    <div class="loading" id="loadingSpinner">
+      <div class="spinner"></div>
+    </div>
   </div>
 
   <script>
     let claveDelServidor = "";
+    const errorMessage = document.getElementById('errorMessage');
+    const passwordInput = document.getElementById('password');
+    const usernameInput = document.getElementById('username');
+    const strengthBar = document.querySelector('.password-strength');
+    const strengthText = document.querySelector('.strength-text');
+    const loadingSpinner = document.getElementById('loadingSpinner');
 
     // Cargar la clave del servidor desde backend
     fetch('/clave')
@@ -51,16 +277,56 @@
       .then(data => claveDelServidor = data.clave)
       .catch(err => console.error('Error al obtener clave:', err));
 
-    // Validación del login
+    // Validación de fortaleza de contraseña
+    passwordInput.addEventListener('input', function() {
+      const value = this.value;
+      let strength = 0;
+      let text = '';
+
+      if (value.length >= 8) strength += 25;
+      if (value.match(/[A-Z]/)) strength += 25;
+      if (value.match(/[0-9]/)) strength += 25;
+      if (value.match(/[^A-Za-z0-9]/)) strength += 25;
+
+      strengthBar.style.width = strength + '%';
+
+      if (strength <= 25) {
+        strengthBar.style.background = '#ff4444';
+        text = 'Débil';
+      } else if (strength <= 50) {
+        strengthBar.style.background = '#ffbb33';
+        text = 'Regular';
+      } else if (strength <= 75) {
+        strengthBar.style.background = '#00C851';
+        text = 'Buena';
+      } else {
+        strengthBar.style.background = '#007E33';
+        text = 'Fuerte';
+      }
+
+      strengthText.textContent = text;
+    });
+
+    // Validación del login con efectos
     document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const passwordIngresada = e.target.password.value;
+      const usuarioIngresado = e.target.username.value;
 
-      if (passwordIngresada === claveDelServidor) {
-        window.location.href = 'index.html';
-      } else {
-        alert('Contraseña incorrecta');
-      }
+      loadingSpinner.style.display = 'flex';
+
+      setTimeout(() => {
+        if (passwordIngresada === claveDelServidor && usuarioIngresado.toLowerCase() === 'recepcion') {
+          window.location.href = 'index.html';
+        } else {
+          loadingSpinner.style.display = 'none';
+          errorMessage.style.display = 'block';
+          e.target.password.value = '';
+          setTimeout(() => {
+            errorMessage.style.display = 'none';
+          }, 3000);
+        }
+      }, 1000);
     });
   </script>
 </body>
