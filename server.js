@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 // Crear la app
 const app = express();
@@ -14,26 +15,21 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Servir archivos estáticos del frontend
-app.use(express.static('public'));
-
-// Ruta raíz - redirigir al login
-app.get('/', (req, res) => {
-  res.redirect('/login.html');
-});
-
-// Ruta para obtener la clave secreta (solo para desarrollo)
-app.get('/clave', (req, res) => {
-  res.json({ clave: process.env.SECRET_KEY });
-});
-
 // Importar ruta de pacientes
 const pacientesRouter = require('./routes/pacientes');
 app.use('/pacientes', pacientesRouter);
 
-// Rutas básicas
+// Ruta raíz 
 app.get('/', (req, res) => {
-  res.send('API de historial médico funcionando ✅');
+  res.redirect('/login.html');
+});
+
+// Servir archivos estáticos del frontend 
+app.use(express.static('public'));
+
+// Ruta para obtener la clave secreta (solo para desarrollo)
+app.get('/clave', (req, res) => {
+  res.json({ clave: process.env.SECRET_KEY });
 });
 
 // Conectar a MongoDB
